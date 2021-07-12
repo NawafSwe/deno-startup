@@ -2,18 +2,18 @@
 import {Application} from 'https://deno.land/x/oak@v7.7.0/mod.ts';
 // @ts-ignore
 import {router as bookRouter} from './routes/books.route.ts';
-// @ts-ignore
-//import {Router} from 'https://deno.land/x/oak/mod.ts';
+import {connectDB as connect} from './config/dbConnection.ts';
 
+// @ts-ignore
+import {config} from "https://deno.land/x/dotenv/mod.ts";
 
 /* -------------------------------- App Configuration-------------------------------- */
 const app = new Application();
-
 app.use(bookRouter.routes());
 app.use(bookRouter.allowedMethods());
-
-const HOST: string = 'localhost';
-const PORT: number = 6060;
+// config env
+const {HOST, PORT, DB_NAME, DB_URI} = config({safe: true});
 console.debug(`Server running on ${HOST}:${PORT}`);
+connect(DB_URI, DB_NAME);
 // @ts-ignore
-await app.listen({port: PORT});
+await app.listen({port: Number(PORT)});
