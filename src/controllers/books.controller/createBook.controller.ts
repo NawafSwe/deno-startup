@@ -1,11 +1,13 @@
 import {Books, IBook} from '../../models/Book.ts';
+import {Request, Response} from 'https://deno.land/x/opine@1.6.0/mod.ts';
 
-export const createBook = async (context: any) => {
+export const createBook = async (req: Request, res: Response, next: any) => {
     try {
-        console.debug(JSON.stringify(context.request.body, null, 10));
-        const createBookResponse = await Books.create(context.request.body);
-        return (context.response.body = createBookResponse);
+        const {body} = await req;
+        const createBookResponse = await Books.create(body);
+        return res.json({status: 201, message: 'Book created Successfully', statusText: 'Created'});
     } catch (error) {
         console.error(`error occurred in createBook controller, error: ${error}`);
+        res.json({status: 500, message: 'internal Server Error', statusText: 'Internal Error'});
     }
 };
