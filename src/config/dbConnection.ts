@@ -8,7 +8,7 @@ const dbConnection = () => {
             uri: DB_URI,
             database: DB_NAME,
         });
-        const db = new Database({connector, debug: true});
+        const db = new Database({connector, debug: false});
         return db;
     } catch (error) {
         console.error(`error occurred while connecting to the db`);

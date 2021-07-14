@@ -19,7 +19,7 @@ class Books extends Model {
     };
 }
 
-db.sync({drop: true});
-db.link([Books]);
+ db.sync({drop: true});
+ db.link([Books]);
 
 export {Books};
