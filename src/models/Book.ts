@@ -1,7 +1,8 @@
 import {Model, DataTypes} from 'https://deno.land/x/denodb/mod.ts';
 import db from "../config/dbConnection.ts";
 
-interface IBook {
+export interface IBook {
+    id: string;
     name: string;
     author: string;
     publishDate: string;
@@ -19,7 +20,7 @@ class Books extends Model {
     };
 }
 
- db.sync({drop: true});
- db.link([Books]);
+db.sync();
+db.link([Books]);
 
 export {Books};
